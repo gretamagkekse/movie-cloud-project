@@ -5,14 +5,16 @@ public class Rating {
 
     private Long id;
     private Long moduleId;
+    private Long userId;
     //auf mehr Kriterien erweiterbar
     private int difficulty;
     private int organisation;
     private int practical;
 
-    public Rating(Long id, Long moduleId, int difficulty, int organisation, int practical) {
+    public Rating(Long id, Long moduleId, Long userId, int difficulty, int organisation, int practical) {
         this.id = id;
         this.moduleId = moduleId;
+        this.userId = userId;
         this.difficulty = difficulty;
         this.organisation = organisation;
         this.practical = practical;
@@ -24,6 +26,9 @@ public class Rating {
 
     public Long getModuleId() {
         return moduleId;
+    }
+    public Long getUserId() {
+        return userId;
     }
 
     public int getDifficulty() {
@@ -43,6 +48,7 @@ public class Rating {
         return "Rating{" +
                 "id=" + id +
                 ", moduleId=" + moduleId +
+                ", userId=" + userId +
                 ", difficulty=" + difficulty +
                 ", organisation=" + organisation +
                 ", practical=" + practical +
