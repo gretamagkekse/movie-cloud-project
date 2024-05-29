@@ -33,7 +33,6 @@ public class RatingService {
 
     }
 
-
     private Long getNextEntryId() {
         return nextId++;
     }
