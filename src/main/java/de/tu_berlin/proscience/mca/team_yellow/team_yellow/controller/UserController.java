@@ -1,6 +1,6 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.controller;
 
-import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.User;
+import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.BlogUser;
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/me")
-    public User getCurrentUser() {
+    public BlogUser getCurrentUser() {
         return userService.getCurrentUser();
     }
 
