@@ -1,6 +1,7 @@
 # Project Team Yellow
 
 ## Running Docker Compose 
+Teständerung
 
 to start the database, you have to run the docker container.
  - first, see if the container is already running by typing in the terminal 'docker ps'
