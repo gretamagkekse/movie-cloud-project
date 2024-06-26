@@ -3,12 +3,12 @@ package de.tu_berlin.proscience.mca.team_yellow.team_yellow.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+//ubung
 @Entity
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false, length = 4096)
     private String content;
 
