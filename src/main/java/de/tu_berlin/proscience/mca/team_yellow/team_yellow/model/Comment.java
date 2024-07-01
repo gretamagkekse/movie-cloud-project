@@ -20,6 +20,8 @@ public class Comment {
 //    private Long user_id;
 
 
+
+
     public Comment() {
     }
 
