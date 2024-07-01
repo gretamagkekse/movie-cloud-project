@@ -5,6 +5,9 @@ to start the database, you have to run the docker container.
  - first, see if the container is already running by typing in the terminal 'docker ps'
  - then, use the command 'docker compose up --detach' to create and run a docker container
 
+to start the database, you have to run the docker container.
+ - first, see if the container is already running by typing in the terminal 'docker ps'
+ - then, use the command 'docker compose up --detach' to create and run a docker container
 
 
 ## Pull changes from main to your dev branch
