@@ -3,27 +3,29 @@ package de.tu_berlin.proscience.mca.team_yellow.team_yellow.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
-//ubung
 @Entity
 public class Comment {
+    //id,content,author, module_id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false, length = 4096)
     private String content;
 
     @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     @JsonManagedReference
-    private User author;
+    private BlogUser author;
+//    private Long module_id;
+//    private Long user_id;
 
-    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
-    @JsonManagedReference
-    private Module module;
 
     public Comment() {
     }
 
-    public Comment( String content, User author) {
+
+
+    public Comment( String content, BlogUser author) {
         this.content = content;
         this.author = author;
 //        this.module_id = module_id;
@@ -38,7 +40,7 @@ public class Comment {
         return content;
     }
 
-    public User getAuthor() {
+    public BlogUser getAuthor() {
         return author;
     }
 //
