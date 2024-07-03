@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 public class Comment {
-    //test comment
+    //id,content,author, module_id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,16 +15,19 @@ public class Comment {
 
     @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     @JsonManagedReference
-    private User author;
+    private BlogUser author;
+//    private Long module_id;
+//    private Long user_id;
 
-    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
-    @JsonManagedReference
-    private Module module;
+
+
 
     public Comment() {
     }
 
-    public Comment( String content, User author) {
+
+
+    public Comment( String content, BlogUser author) {
         this.content = content;
         this.author = author;
 //        this.module_id = module_id;
@@ -39,7 +42,7 @@ public class Comment {
         return content;
     }
 
-    public User getAuthor() {
+    public BlogUser getAuthor() {
         return author;
     }
 //
