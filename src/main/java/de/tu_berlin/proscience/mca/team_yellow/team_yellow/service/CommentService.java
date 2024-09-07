@@ -1,50 +1,44 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.service;
 
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.dto.CommentInput;
+import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.BlogUser;
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.Comment;
-import de.tu_berlin.proscience.mca.team_yellow.team_yellow.repository.ModuleCommentRepository;
+import de.tu_berlin.proscience.mca.team_yellow.team_yellow.repository.BlogUserRepository;
+import de.tu_berlin.proscience.mca.team_yellow.team_yellow.repository.CommentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class CommentService {
-    private ModuleCommentRepository moduleCommentRepository;
 
-    private UserService userService;
+    private final CommentRepository commentRepository;
+    private final BlogUserRepository blogUserRepository;  // Add user repository
 
-
-    public CommentService(ModuleCommentRepository moduleCommentRepository, UserService userService) {
-        this.moduleCommentRepository = moduleCommentRepository;
-        this.userService = userService;
+    @Autowired
+    public CommentService(CommentRepository commentRepository, BlogUserRepository blogUserRepository) {
+        this.commentRepository = commentRepository;
+        this.blogUserRepository = blogUserRepository;
     }
 
-    public List<Comment> getAllComments() {
-        return moduleCommentRepository.findAll();
+    // Add a new comment for a specific movie (all comments will be from Tanem)
+    public Comment addComment(Long movieId, String content, Double rating) {
+        // Fetch the Tanem user from the database
+        BlogUser tanemUser = blogUserRepository.findByUserName("Tanem")
+                .orElseThrow(() -> new RuntimeException("User 'Tanem' not found"));
+
+        // Create and save the comment with Tanem as the author
+        Comment comment = new Comment(movieId, tanemUser, content, rating);
+        return commentRepository.save(comment);
     }
 
-    public Optional<Comment> getCommentById(long id) {
-        return moduleCommentRepository.findById(id);
+    // Retrieve all comments for a specific movie
+    public List<Comment> getCommentsByMovieId(Long movieId) {
+        return commentRepository.findByMovieId(movieId);
     }
-
-//
-//    public List<Comment> getAllCommentsByModule(Long id) {
-//        return comments.stream().filter(comment -> comment.getModule_id() == id).toList();
-//    }
-//    public List<Comment> getAllCommentsByUserId(@PathVariable Long id) {
-//        return comments.stream().filter(comment -> comment.getUser_id() == id).toList();
-//    }
-
-    //moduleId und userId nach implementierung von modules und users hinzufügen!!
-    public Comment addComment(CommentInput commentInput) {
-        Comment comment = new Comment(
-                commentInput.getContent(),
-                userService.getCurrentUser()
-                );
-        return moduleCommentRepository.save(comment);
-    }
-
-
-
 }
+

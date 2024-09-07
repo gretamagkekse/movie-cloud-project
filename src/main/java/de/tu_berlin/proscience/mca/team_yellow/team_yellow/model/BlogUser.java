@@ -1,48 +1,40 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.List;
 
 @Entity
+@Table(name = "blog_user")
 public class BlogUser {
-    //id,display_name, email, degree_id, pw_hash
 
-    //https://github.com/freitagsrunde/modulist/blob/master/db/model-user.go
-    //ID, FirstName,LastName, Mail, MailVerified, PasswordHash, StatusGroup,privileges, Enabled
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
 
-    @OneToMany(mappedBy = "author")
-    @JsonBackReference
-    private List<Comment> comments;
-//    private String firstName;
-//    private String lastName;
-//    private String mail;
+    // Constructors, Getters, and Setters
+    public BlogUser() {}
 
-
-
-    @JsonIgnore
-    private String passwordHash;
-
-    public BlogUser() {
+    public BlogUser(String userName) {
+        this.userName = userName;
     }
 
-
     public Long getId() {
-        return Id;
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserName() {
         return userName;
     }
-    public List<Comment> getComments() {
-        return comments;
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
+

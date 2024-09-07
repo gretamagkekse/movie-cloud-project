@@ -10,7 +10,7 @@ services:
     environment:
       - TZ=Europe/Berlin
       - PGTZ=Europe/Berlin
-      - POSTGRES_DB=my_db
+      - POSTGRES_DB=postgres
       - POSTGRES_USER=my_user
       - POSTGRES_PASSWORD=passw0rd
 volumes:

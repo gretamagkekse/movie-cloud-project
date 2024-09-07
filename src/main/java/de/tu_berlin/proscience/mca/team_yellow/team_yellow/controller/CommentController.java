@@ -3,47 +3,34 @@ package de.tu_berlin.proscience.mca.team_yellow.team_yellow.controller;
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.dto.CommentInput;
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.Comment;
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.service.CommentService;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+
 @RestController
+@RequestMapping("/api/comments")
 public class CommentController {
 
-    private CommentService commentService;
+    private final CommentService commentService;
 
-
+    @Autowired
     public CommentController(CommentService commentService) {
         this.commentService = commentService;
     }
 
-
-
-    // POST A COMMENT
-    @PostMapping(path="/comments")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Comment addComment(@RequestBody CommentInput commentInput) {
-        if (commentInput.getContent().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-        return commentService.addComment(commentInput);
+    // Add a new comment for a movie
+    @PostMapping("/{movieId}")
+    public Comment addComment(@PathVariable Long movieId, @RequestBody CommentInput commentInput) {
+        // Only the content and rating will be passed; username is auto-set to 'Tanem'
+        return commentService.addComment(movieId, commentInput.getContent(), commentInput.getRating());
     }
 
-    // GET ALL COMMENTS
-    @GetMapping(path = "/comments")
-    public List<Comment> getComments() {
-        return commentService.getAllComments();
+    // Get all comments for a specific movie
+    @GetMapping("/{movieId}")
+    public List<Comment> getComments(@PathVariable Long movieId) {
+        return commentService.getCommentsByMovieId(movieId);
     }
-
-//    @GetMapping(path="/comments/user/{id}")
-//    public List<Comment> getAllCommentsByUserId(@PathVariable Long id) {
-//        return commentService.getAllCommentsByUserId(id);
-//    }
-//    @GetMapping(path="/comments/{id}")
-//    public List<Comment> getAllCommentsByModule(@PathVariable Long id) {
-//        return commentService.getAllCommentsByModule(id);
-//    }
-
 }
+

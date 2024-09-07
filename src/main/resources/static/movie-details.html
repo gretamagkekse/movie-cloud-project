@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <h1 id="movie-title" class="text-center my-4">Movie Title</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <img id="movie-poster" src="" alt="Movie Poster" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+            <h3>Overview</h3>
+            <p id="movie-overview"></p>
+
+            <h4>Vote Average: <span id="movie-vote"></span></h4>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <h3 class="mt-5">Comments and Ratings</h3>
+    <ul id="comments-list" class="list-group mb-4">
+        <!-- Comments will be dynamically loaded here -->
+    </ul>
+
+    <!-- Add Comment Form -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add Your Comment</h5>
+            <form id="comment-form">
+                <div class="mb-3">
+                    <input type="text" id="username" class="form-control" placeholder="Your Name" required>
+                </div>
+                <div class="mb-3">
+                    <textarea id="content" class="form-control" placeholder="Your Comment" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <input type="number" id="rating" class="form-control" placeholder="Your Rating (1-10)" min="1" max="10" step="0.1" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const movieId = params.get("id");
+
+    // Function to load movie details
+    function loadMovieDetails() {
+        fetch(`/api/movie/${movieId}`)
+            .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error fetching movie details: ${response.status}`);
+            }
+            return response.json();
+        })
+            .then(movie => {
+            console.log("Movie details:", movie);  // Log the movie details for debugging
+
+            // Update the HTML with movie details
+            document.getElementById("movie-title").innerText = movie.title;
+            document.getElementById("movie-overview").innerText = movie.overview;
+
+            // Check and display vote average with one decimal point
+            if (movie.voteAverage !== undefined && movie.voteAverage !== null) {
+                document.getElementById("movie-vote").innerText = movie.voteAverage.toFixed(1);  // Format to 1 decimal place
+            } else if (movie.vote_average !== undefined && movie.vote_average !== null) {
+                document.getElementById("movie-vote").innerText = movie.vote_average.toFixed(1);  // Format to 1 decimal place
+            } else {
+                document.getElementById("movie-vote").innerText = "No vote average available";
+            }
+
+            document.getElementById("movie-poster").src = movie.fullPosterPath;
+        })
+            .catch(error => {
+            console.error("Error fetching movie details:", error);
+            alert("Failed to load movie details.");
+        });
+    }
+
+    // Function to load comments for the movie
+    function loadComments() {
+        fetch(`/api/comments/${movieId}`)
+            .then(response => response.json())
+            .then(comments => {
+            const commentsList = document.getElementById("comments-list");
+            commentsList.innerHTML = ''; // Clear previous comments
+            comments.forEach(comment => {
+                const listItem = document.createElement("li");
+                listItem.className = "list-group-item";
+                listItem.innerHTML = `<strong>${comment.username}</strong> (${comment.rating}/10): ${comment.content}`;
+                commentsList.appendChild(listItem);
+            });
+        })
+            .catch(error => console.error("Error fetching comments:", error));
+    }
+
+    // Handle form submission for adding a comment
+    document.getElementById("comment-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const username = document.getElementById("username").value;
+        const content = document.getElementById("content").value;
+        const rating = document.getElementById("rating").value;
+
+        const commentData = {
+            username: username,
+            content: content,
+            rating: parseFloat(rating)
+        };
+
+        fetch(`/api/comments/${movieId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(commentData)
+        })
+            .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response.json();
+        })
+            .then(() => {
+            loadComments();  // Reload the comments after submission
+            document.getElementById("comment-form").reset();  // Clear the form
+        })
+            .catch(error => console.error("Error submitting comment:", error));
+    });
+
+
+    // Load movie details and comments when the page loads
+    loadMovieDetails();
+    loadComments();
+</script>
+
+</body>
+</html>
+
