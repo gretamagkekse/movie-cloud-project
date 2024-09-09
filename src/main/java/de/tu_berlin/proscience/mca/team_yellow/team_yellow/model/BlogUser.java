@@ -26,8 +26,6 @@ public class BlogUser {
 //    private String lastName;
 //    private String mail;
 
-
-
     @JsonIgnore
     private String passwordHash;
 
@@ -41,6 +39,9 @@ public class BlogUser {
 
     public String getUserName() {
         return userName;
+    }
+    public String getPasswordHash() {
+        return passwordHash;
     }
     public List<Comment> getComments() {
         return comments;

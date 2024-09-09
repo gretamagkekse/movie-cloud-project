@@ -1,27 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Moses Extension</title>
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <meta charset="UTF-8">
+    <title>My simple blog</title>
+    <link rel='stylesheet' href='webjars/bootstrap/dist/css/bootstrap.min.css'>
 </head>
-
 <body>
 <header>
-    <h1>Comments</h1>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="create.html">Bewerten & Kommentieren</a></li>
-        </ul>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li id="indexLink" class="nav-item">
+                    <a href="index.html" class="nav-link active">All movies</a>
+                </li>
+                <li id="loginLink" class="nav-item">
+                    <a href="login.html" class="nav-link">Login</a>
+                </li>
+                <li id="createLink" class="nav-item" hidden>
+                    <a href="create.html" class="nav-link ">Create</a>
+                </li>
+                <li id="logoutLink" class="nav-item" hidden>
+                    <a class="nav-link" onclick="logout()">Logout</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 </header>
 <main>
-    <div id="content">
-        no blog entry available
+    <div class="container mt-5">
+        <div class="vw-90">
+            <div id="content">
+                <p>No blog entry available.</p>
+            </div>
+        </div>
     </div>
 </main>
-
+<script src="webjars/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/nav.js" type="application/javascript"></script>
 <script src="js/index.js" type="application/javascript"></script>
 </body>
-
 </html>

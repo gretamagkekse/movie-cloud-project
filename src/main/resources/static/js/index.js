@@ -1,7 +1,7 @@
-
+//TODO: change to movie overview
 function showComments(data) {
-    if(data.length === 0){
-    return;
+    if (data.length === 0) {
+        return;
     }
     const contentDiv = document.getElementById('content');
     let comments = '';
@@ -13,8 +13,6 @@ function showComments(data) {
     contentDiv.innerHTML = comments;
 
 }
-
-
 
 fetch('/comments')
     .then(resp => resp.json())

@@ -2,30 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Moses Extension</title>
+    <title>My simple blog</title>
+    <link rel='stylesheet' href='webjars/bootstrap/dist/css/bootstrap.min.css'>
 </head>
 <body>
 <header>
-    <h1>Create a new comment</h1>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="create.html">Bewerten & Kommentieren</a></li>
-        </ul>
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li id="indexLink" class="nav-item">
+                    <a href="index.html" class="nav-link">All movies</a>
+                </li>
+                <li id="loginLink" class="nav-item">
+                    <a href="login.html" class="nav-link">Login</a>
+                </li>
+                <li id="createLink" class="nav-item" hidden>
+                    <a href="create.html" class="nav-link active">Create</a>
+                </li>
+                <li id="logoutLink" class="nav-item" hidden>
+                    <a class="nav-link" onclick="logout()">Logout</a>
+                </li>
+            </ul>
+        </div>
     </nav>
+
 </header>
 <main>
-    <div>
-        <label for="commentContent">Content:</label>
-        <textarea id="commentContent" rows="10"> </textarea>
-    </div>
-    <div>
-        <input onclick="createNewComment()" type="button" value="Create"/>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-6 form-label">
+                <label for="commentContent">Content:</label>
+            </div>
+            <div class="col-sm-6">
+                <textarea id="commentContent" class="form-control" rows="10"></textarea>
+            </div>
+        </div>
+
+        <div>
+            <input class="btn btn-primary" onclick="createNewComment()" type="button" value="Create"/>
+        </div>
     </div>
 </main>
-
+<script src="webjars/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="js/create.js" type="application/javascript"></script>
-
+<script src="js/nav.js" type="application/javascript"></script>
 
 </body>
 </html>

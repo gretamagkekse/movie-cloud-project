@@ -36,11 +36,11 @@ public class CommentService {
 //        return comments.stream().filter(comment -> comment.getUser_id() == id).toList();
 //    }
 
-    //moduleId und userId nach implementierung von modules und users hinzufügen!!
-    public Comment addComment(CommentInput commentInput) {
+    //TODO:moduleId und userId nach implementierung von modules und users hinzufügen!!
+    public Comment addComment(CommentInput commentInput, String username) {
         Comment comment = new Comment(
                 commentInput.getContent(),
-                userService.getCurrentUser()
+                userService.getCurrentUser(username).get()
                 );
         return moduleCommentRepository.save(comment);
     }

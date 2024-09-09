@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My simple blog</title>
+    <link rel='stylesheet' href='webjars/bootstrap/dist/css/bootstrap.min.css'>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li id="indexLink" class="nav-item">
+                    <a href="index.html" class="nav-link">All movies</a>
+                </li>
+                <li id="loginLink" class="nav-item">
+                    <a href="login.html" class="nav-link active">Login</a>
+                </li>
+                <li id="createLink" class="nav-item" hidden>
+                    <a href="create.html" class="nav-link ">Create</a>
+                </li>
+                <li id="logoutLink" class="nav-item" hidden>
+                    <a class="nav-link" onclick="logout()">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-6 form-label">
+                <label for="inputUsername">User:</label>
+            </div>
+            <div class="col-sm-6">
+                <input id="inputUsername" class="form-control" type="text"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-label">
+                <label for="inputPassword">Password:</label>
+            </div>
+            <div class="col-sm-6">
+                <input id="inputPassword" class="form-control" type="password"/>
+            </div>
+        </div>
+        <div>
+            <input class="btn btn-primary" onclick="login()" type="button" value="Login"/>
+        </div>
+    </div>
+</main>
+<script src="webjars/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/login.js" type="application/javascript"></script>
+<script src="js/nav.js" type="application/javascript"></script>
+</body>
+</html>

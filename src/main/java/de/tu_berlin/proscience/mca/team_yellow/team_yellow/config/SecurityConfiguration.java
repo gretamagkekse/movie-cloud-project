@@ -15,7 +15,7 @@ public class SecurityConfiguration {
 
     //TODO: need to be adjusted
     private static final String[] PATH_WITH_FREE_ACCESS = {
-            "/modules/**", "/", "index.html", "create.html", "/js/**", "/webjars/**",
+            "/modules/**", "/", "index.html", "create.html", "login.html", "/js/**", "/webjars/**",
             "/swagger-ui.html", "/swagger-ui/**", "/v3/**"};
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

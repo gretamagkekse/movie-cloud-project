@@ -1,18 +1,30 @@
-function createNewComment() {
-    console.log("here");
-    let newComment = {};
-    newComment.content = document.getElementById('commentContent').value;  // Corrected function name
-    sendData(newComment);
-}
+function login() {
+    let credentials = {};
+    credentials.username = document.getElementById('inputUsername').value;
+    credentials.password = document.getElementById('inputPassword').value;
 
-function sendData(data) {
-    fetch('/comments', {
-        method: 'POST',
+    const auth = btoa(credentials.username + ':' + credentials.password);
+
+    fetch('/me', {
+        method: 'GET',
         headers: {
-            'Accept': 'application/json',
+            'Authorization': 'Basic ' + auth,
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then(e => location.href = 'index.html')
+        }
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error(response.statusText)
+        }
+        const userCredentials = {
+            username: credentials.username,
+            password: credentials.password
+        };
+
+        sessionStorage.setItem("userCredential", JSON.stringify(userCredentials));
+        console.log("Credentials stored successfully");
+
+        return response.json();
+    }).then(e => location.href = "index.html")
         .catch(e => console.error(e));
+
 }
