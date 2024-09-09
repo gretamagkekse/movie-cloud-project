@@ -1,18 +1,21 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.model;
 
-public class Degree {
-    //id, title,....siehe API
+public class Movie {
+
     private Long id;
     private String title;
+    private String summary;
 
-    public Degree(Long id, String title) {
-        this.id = id;
-        this.title = title;
-    }
+
     public Long getId() {
         return id;
     }
+
     public String getTitle() {
         return title;
+    }
+
+    public String getSummary() {
+        return summary;
     }
 }

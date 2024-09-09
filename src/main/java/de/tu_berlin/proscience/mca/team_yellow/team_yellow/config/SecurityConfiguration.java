@@ -15,19 +15,20 @@ public class SecurityConfiguration {
 
     //TODO: need to be adjusted
     private static final String[] PATH_WITH_FREE_ACCESS = {
-            "/modules/**", "/", "index.html", "create.html", "login.html", "/js/**", "/webjars/**",
+            "/movies/**", "/", "index.html", "create.html", "login.html", "/js/**", "/webjars/**",
             "/swagger-ui.html", "/swagger-ui/**", "/v3/**"};
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http    .csrf(csrf -> csrf.disable())
+        http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(httpRequest ->
                         httpRequest
-                            .requestMatchers(HttpMethod.POST,"/comments").authenticated()
-                            .requestMatchers("/me").authenticated()
-                            .requestMatchers(PATH_WITH_FREE_ACCESS).permitAll()
-                            .anyRequest().authenticated())
+                                .requestMatchers(HttpMethod.POST, "/comments").authenticated()
+                                .requestMatchers("/me").authenticated()
+                                .requestMatchers(PATH_WITH_FREE_ACCESS).permitAll()
+                                .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
-                .sessionManagement(sm ->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
