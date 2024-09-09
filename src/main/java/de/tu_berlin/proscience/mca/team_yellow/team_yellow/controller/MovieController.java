@@ -25,5 +25,4 @@ public class MovieController {
         return tmdbService.searchMovies(query);
     }
 
-
 }

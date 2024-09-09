@@ -13,7 +13,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)  // Reference to the blog_user table
-    private BlogUser user;  // Will be auto-set to 'Tanem'
+    private PlatformUser user;  // Will be auto-set to 'Tanem'
 
     private Long movieId; // Reference to the movie
 
@@ -28,7 +28,7 @@ public class Comment {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Comment(Long movieId, BlogUser user, String content, Double rating) {
+    public Comment(Long movieId, PlatformUser user, String content, Double rating) {
         this.movieId = movieId;
         this.user = user;
         this.content = content;
@@ -44,11 +44,11 @@ public class Comment {
         this.id = id;
     }
 
-    public BlogUser getUser() {
+    public PlatformUser getUser() {
         return user;
     }
 
-    public void setUser(BlogUser user) {
+    public void setUser(PlatformUser user) {
         this.user = user;
     }
 

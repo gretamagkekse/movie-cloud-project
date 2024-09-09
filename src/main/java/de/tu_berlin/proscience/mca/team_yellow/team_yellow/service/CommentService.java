@@ -1,26 +1,23 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.service;
 
-import de.tu_berlin.proscience.mca.team_yellow.team_yellow.dto.CommentInput;
-import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.BlogUser;
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.Comment;
-import de.tu_berlin.proscience.mca.team_yellow.team_yellow.repository.BlogUserRepository;
+import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.PlatformUser;
+
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.repository.CommentRepository;
+import de.tu_berlin.proscience.mca.team_yellow.team_yellow.repository.PlatformUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final BlogUserRepository blogUserRepository;  // Add user repository
+    private final PlatformUserRepository blogUserRepository;  // Add user repository
 
     @Autowired
-    public CommentService(CommentRepository commentRepository, BlogUserRepository blogUserRepository) {
+    public CommentService(CommentRepository commentRepository, PlatformUserRepository blogUserRepository) {
         this.commentRepository = commentRepository;
         this.blogUserRepository = blogUserRepository;
     }
@@ -28,7 +25,7 @@ public class CommentService {
     // Add a new comment for a specific movie (all comments will be from Tanem)
     public Comment addComment(Long movieId, String content, Double rating) {
         // Fetch the Tanem user from the database
-        BlogUser tanemUser = blogUserRepository.findByUserName("Tanem")
+        PlatformUser tanemUser = blogUserRepository.findByUserName("Tanem")
                 .orElseThrow(() -> new RuntimeException("User 'Tanem' not found"));
 
         // Create and save the comment with Tanem as the author

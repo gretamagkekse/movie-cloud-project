@@ -40,6 +40,4 @@ public class CommentInput {
     public void setRating(Double rating) {
         this.rating = rating;
     }
-
 }
-

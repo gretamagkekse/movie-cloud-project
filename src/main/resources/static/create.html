@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Rating Platform</title>
+    <link rel='stylesheet' href='webjars/bootstrap/dist/css/bootstrap.min.css'>
+    <!-- Star Rating CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-star-rating/css/star-rating.min.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li id="indexLink" class="nav-item">
+                    <a href="index.html" class="nav-link">All movies</a>
+                </li>
+                <li id="loginLink" class="nav-item">
+                    <a href="login.html" class="nav-link">Login</a>
+                </li>
+                <li id="createLink" class="nav-item" hidden>
+                    <a href="create.html" class="nav-link active">Create Rating</a>
+                </li>
+                <li id="logoutLink" class="nav-item" hidden>
+                    <a class="nav-link" onclick="logout()">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="container">
+        <h1>Rate movie</h1>
+        <form id="ratingForm">
+            <div class="mb-3">
+                <label for="ratingActors" class="form-label">Actors:</label>
+                <input id="ratingActors" name="actors" class="rating" data-size="lg" data-min="0" data-max="5"
+                       data-step="1">
+            </div>
+
+            <div class="mb-3">
+                <label for="ratingStory" class="form-label">Story:</label>
+                <input id="ratingStory" name="story" class="rating" data-size="lg" data-min="0" data-max="5"
+                       data-step="1">
+            </div>
+
+            <div class="mb-3">
+                <label for="ratingVisuals" class="form-label">Visuals:</label>
+                <input id="ratingVisuals" name="visuals" class="rating" data-size="lg" data-min="0" data-max="5"
+                       data-step="1">
+            </div>
+
+            <div class="mb-3">
+                <label for="ratingComment" class="form-label">Comment:</label>
+                <textarea id="ratingComment" class="form-control" rows="3"></textarea>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="createNewRating()">Submit</button>
+        </form>
+    </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-star-rating/js/star-rating.min.js"></script>
+<script src="webjars/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/create.js" type="application/javascript"></script>
+<script src="js/nav.js" type="application/javascript"></script>
+
+</body>
+</html>
