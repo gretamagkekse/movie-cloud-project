@@ -1,7 +1,7 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.service;
 
-import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.BlogUser;
-import de.tu_berlin.proscience.mca.team_yellow.team_yellow.repository.UserRepository;
+import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.PlatformUser;
+import de.tu_berlin.proscience.mca.team_yellow.team_yellow.repository.PlatformUserRepository;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -14,20 +14,20 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class UserDetailServiceImpl implements UserDetailsService {
-    private final UserRepository userRepository;
+public class PlatformUserDetailService implements UserDetailsService {
+    private final PlatformUserRepository platformUserRepository;
 
-    public UserDetailServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public PlatformUserDetailService(PlatformUserRepository platformUserRepository) {
+        this.platformUserRepository = platformUserRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<BlogUser> userOptional = userRepository.findByUserName(username);
-        if(userOptional.isEmpty()) {
+        Optional<PlatformUser> userOptional = platformUserRepository.findByUserName(username);
+        if (userOptional.isEmpty()) {
             throw new UsernameNotFoundException(username);
         }
-        BlogUser user = userOptional.get();
+        PlatformUser user = userOptional.get();
         return new User(user.getUserName(), user.getPasswordHash(), Set.of(new SimpleGrantedAuthority("ROLE_USER")));
     }
 

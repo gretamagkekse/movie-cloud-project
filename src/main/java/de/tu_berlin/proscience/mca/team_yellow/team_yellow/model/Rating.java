@@ -1,57 +1,63 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+
+@Entity
 public class Rating {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long moduleId;
-    private Long userId;
-    //auf mehr Kriterien erweiterbar
-    private int difficulty;
-    private int organisation;
-    private int practical;
 
-    public Rating(Long id, Long moduleId, Long userId, int difficulty, int organisation, int practical) {
-        this.id = id;
-        this.moduleId = moduleId;
-        this.userId = userId;
-        this.difficulty = difficulty;
-        this.organisation = organisation;
-        this.practical = practical;
+    @Column(nullable = false)
+    private int actors;
+
+    @Column(nullable = false)
+    private int story;
+
+    @Column(nullable = false)
+    private int visuals;
+
+    @Column(nullable = false, length = 4096)
+    private String comment;
+
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+    @JsonManagedReference
+    private PlatformUser author;
+
+
+    public Rating() {
+    }
+
+    public Rating(int actors, int story, int visuals, String comment, PlatformUser author) {
+        this.actors = actors;
+        this.story = story;
+        this.visuals = visuals;
+        this.comment = comment;
+        this.author = author;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Long getModuleId() {
-        return moduleId;
-    }
-    public Long getUserId() {
-        return userId;
+    public int getActors() {
+        return actors;
     }
 
-    public int getDifficulty() {
-        return difficulty;
+    public int getStory() {
+        return story;
     }
 
-    public int getOrganisation() {
-        return organisation;
+    public int getVisuals() {
+        return visuals;
     }
 
-    public int getPractical() {
-        return practical;
+    public String getComment() {
+        return comment;
     }
 
-    @Override
-    public String toString() {
-        return "Rating{" +
-                "id=" + id +
-                ", moduleId=" + moduleId +
-                ", userId=" + userId +
-                ", difficulty=" + difficulty +
-                ", organisation=" + organisation +
-                ", practical=" + practical +
-                '}';
-    }
+
 }

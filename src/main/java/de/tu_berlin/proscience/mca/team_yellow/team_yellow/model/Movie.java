@@ -1,12 +1,10 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.model;
 
-public class Module {
-    //id, title,....siehe API
-    // ID,Title,CourseType,CourseID,CreditHours,Annotation,Content,CourseURL,DetailedDescription,Requirements,Audience ,Comment,CourseAssessment ,Literature,TeachingContents,Cycle
+public class Movie {
 
     private Long id;
-    private String Title;
-    private String Content;
+    private String title;
+    private String summary;
 
 
     public Long getId() {
@@ -14,10 +12,10 @@ public class Module {
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
-    public String getContent() {
-        return Content;
+    public String getSummary() {
+        return summary;
     }
 }

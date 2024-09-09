@@ -1,21 +1,21 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.service;
 
-import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.BlogUser;
-import de.tu_berlin.proscience.mca.team_yellow.team_yellow.repository.UserRepository;
+import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.PlatformUser;
+import de.tu_berlin.proscience.mca.team_yellow.team_yellow.repository.PlatformUserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UserService {
-    private UserRepository userRepository;
+public class PlatformUserService {
+    private PlatformUserRepository platformUserRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public PlatformUserService(PlatformUserRepository platformUserRepository) {
+        this.platformUserRepository = platformUserRepository;
     }
 
-    public Optional<BlogUser> getCurrentUser(String username) {
-        return userRepository.findByUserName(username);
+    public Optional<PlatformUser> getCurrentUser(String username) {
+        return platformUserRepository.findByUserName(username);
     }
 
 }

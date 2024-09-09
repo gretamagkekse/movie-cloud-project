@@ -1,23 +1,32 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.dto;
 
 public class RatingInput {
-    private int difficulty;
-    private int organisation;
-    private int practical;
+    private int actors;
+    private int story;
+    private int visuals;
+    private String comment;
 
-    public RatingInput(int difficulty, int organisation, int practical) {
-        this.difficulty = difficulty;
-        this.organisation = organisation;
-        this.practical = practical;
+    public RatingInput(int actors, int story, int visuals, String comment) {
+        this.actors = actors;
+        this.story = story;
+        this.visuals = visuals;
+        this.comment = comment;
     }
-    public int getDifficulty() {
-        return difficulty;
+
+    public int getActors() {
+        return actors;
     }
-    public int getOrganisation() {
-        return organisation;
+
+    public int getStory() {
+        return story;
     }
-    public int getPractical() {
-        return practical;
+
+    public int getVisuals() {
+        return visuals;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
 }

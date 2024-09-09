@@ -1,7 +1,7 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.controller;
 
-import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.Module;
-import de.tu_berlin.proscience.mca.team_yellow.team_yellow.service.ModuleService;
+import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.Movie;
+import de.tu_berlin.proscience.mca.team_yellow.team_yellow.service.MovieService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,30 +12,27 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class ModuleController {
+public class MovieController {
 
-    private ModuleService moduleService;
+    private MovieService movieService;
 
-    public ModuleController(ModuleService moduleService) {
-        this.moduleService = moduleService;
+    public MovieController(MovieService movieService) {
+        this.movieService = movieService;
     }
 
-    @GetMapping(path="/modules")
-    public List<Module> getAllModules(){
-        return moduleService.getAllModules();
+    @GetMapping(path = "/movies")
+    public List<Movie> getAllMovies() {
+        return movieService.getAllMovies();
     }
 
 
-
-    @GetMapping(path="/modules/{id}")
-    public Module getModuleById(@PathVariable Long id){
-        Optional<Module> moduleOptional = moduleService.getModuleById(id);
-        if (moduleOptional.isEmpty()) {
+    @GetMapping(path = "/movies/{id}")
+    public Movie getMovieById(@PathVariable Long id) {
+        Optional<Movie> movieOptional = movieService.getMovieById(id);
+        if (movieOptional.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return moduleOptional.get();
+        return movieOptional.get();
     }
-    //getModulesByDegreeId
-
 
 }
