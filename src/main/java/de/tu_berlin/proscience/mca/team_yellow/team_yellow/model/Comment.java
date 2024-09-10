@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "comments")  // Change table name to avoid conflict with reserved keyword
 public class Comment {
 
     @Id

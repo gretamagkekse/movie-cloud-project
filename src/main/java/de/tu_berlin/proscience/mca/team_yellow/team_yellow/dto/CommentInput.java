@@ -32,19 +32,22 @@ public class CommentInput {
     }
 
     public void setRatingActors(int rating) {
-        this.ratingActors = ratingActors;
+        this.ratingActors = rating;
     }
+
     public int getRatingStory() {
         return ratingStory;
     }
+
     public void setRatingStory(int rating) {
-        this.ratingStory = ratingStory;
+        this.ratingStory = rating;
     }
+
     public int getRatingVisuals() {
         return ratingVisuals;
     }
-    public void setRatingVisuals(int rating) {
-        this.ratingVisuals = ratingVisuals;
-    }
 
+    public void setRatingVisuals(int rating) {
+        this.ratingVisuals = rating;
+    }
 }
