@@ -1,43 +1,49 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.dto;
 
 public class CommentInput {
-
-    private String username;
-    private String content;
-    private Double rating;
+    private int ratingActors;
+    private int ratingStory;
+    private int ratingVisuals;
+    private String comment;
 
     // Constructors, Getters and Setters
 
     public CommentInput() {
     }
 
-    public CommentInput(String username, String content, Double rating) {
-        this.username = username;
-        this.content = content;
-        this.rating = rating;
+    public CommentInput(int ratingActors, int ratingStory,int ratingVisuals, String comment) {
+        this.ratingActors = ratingActors;
+        this.ratingStory = ratingStory;
+        this.ratingVisuals = ratingVisuals;
+        this.comment = comment;
     }
 
-    public String getUsername() {
-        return username;
+    public String getComment() {
+        return comment;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public String getContent() {
-        return content;
+    public int getRatingActors() {
+        return ratingActors;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setRatingActors(int rating) {
+        this.ratingActors = ratingActors;
+    }
+    public int getRatingStory() {
+        return ratingStory;
+    }
+    public void setRatingStory(int rating) {
+        this.ratingStory = ratingStory;
+    }
+    public int getRatingVisuals() {
+        return ratingVisuals;
+    }
+    public void setRatingVisuals(int rating) {
+        this.ratingVisuals = ratingVisuals;
     }
 
-    public Double getRating() {
-        return rating;
-    }
-
-    public void setRating(Double rating) {
-        this.rating = rating;
-    }
 }

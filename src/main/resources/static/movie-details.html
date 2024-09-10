@@ -41,6 +41,7 @@
     <h3 class="mt-5">Comments and Ratings</h3>
     <ul id="comments-list" class="list-group mb-4">
         <!-- Comments will be dynamically loaded here -->
+
     </ul>
 
     <!-- Add Comment Form -->
@@ -48,14 +49,16 @@
         <div class="card-body">
             <h5 class="card-title">Add Your Comment</h5>
             <form id="comment-form">
-                <div class="mb-3">
-                    <input type="text" id="username" class="form-control" placeholder="Your Name" required>
-                </div>
+
                 <div class="mb-3">
                     <textarea id="content" class="form-control" placeholder="Your Comment" required></textarea>
                 </div>
                 <div class="mb-3">
-                    <input type="number" id="rating" class="form-control" placeholder="Your Rating (1-10)" min="1" max="10" step="0.1" required>
+                    <input type="number" id="rating" class="form-control" placeholder="Your Rating of the actors (1-5)" min="1" max="5" step="1" required>
+                    <input type="number" id="ratingStory" class="form-control" placeholder="Your Rating of the story (1-5)" min="1" max="5" step="1" required>
+                    <input type="number" id="ratingVisuals" class="form-control" placeholder="Your Rating of the visuals (1-5)" min="1" max="5" step="1" required>
+
+
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -114,7 +117,7 @@
             comments.forEach(comment => {
                 const listItem = document.createElement("li");
                 listItem.className = "list-group-item";
-                listItem.innerHTML = `<strong>${comment.username}</strong> (${comment.rating}/10): ${comment.content}`;
+                listItem.innerHTML = `<strong>Actors:</strong> (${comment.ratingActors}/10), <strong>Story:</strong> (${comment.ratingStory}/10), <strong>Visuals:</strong> (${comment.ratingVisuals}/10) : ${comment.comment}`;
                 commentsList.appendChild(listItem);
             });
         })
@@ -123,30 +126,39 @@
 
     // Handle form submission for adding a comment
     document.getElementById("comment-form").addEventListener("submit", function(event) {
+        const userCredentialString = sessionStorage.getItem("userCredential");
+        const userCredential = JSON.parse(userCredentialString);
+        console.log(userCredential)
+        const auth = btoa(userCredential.username + ':' + userCredential.password);
+
         event.preventDefault();
-        const username = document.getElementById("username").value;
-        const content = document.getElementById("content").value;
-        const rating = document.getElementById("rating").value;
 
         const commentData = {
-            username: username,
-            content: content,
-            rating: parseFloat(rating)
+            ratingActors: document.getElementById("ratingActors").value,
+            ratingStory: document.getElementById("ratingStory").value,
+            ratingVisuals: document.getElementById("ratingVisuals").value,
+            comment: document.getElementById("content").value
         };
 
+        console.log(commentData)
         fetch(`/api/comments/${movieId}`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                'Authorization': 'Basic ' + auth
             },
             body: JSON.stringify(commentData)
         })
             .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-            return response.json();
-        })
+                if (response.status === 401) {
+                    alert("Unauthorized: Please log in.");
+                    window.location.href = 'login.html';
+                } else if (!response.ok) {
+                    throw new Error(`Error: ${response.status}`);
+                }
+                return response.json();
+            })
+
             .then(() => {
             loadComments();  // Reload the comments after submission
             document.getElementById("comment-form").reset();  // Clear the form

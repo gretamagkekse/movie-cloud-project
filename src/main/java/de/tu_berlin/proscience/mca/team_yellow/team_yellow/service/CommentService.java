@@ -1,5 +1,6 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.service;
 
+import de.tu_berlin.proscience.mca.team_yellow.team_yellow.dto.CommentInput;
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.Comment;
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.PlatformUser;
 
@@ -14,22 +15,25 @@ import java.util.List;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final PlatformUserRepository blogUserRepository;  // Add user repository
+    private PlatformUserService userService;
 
     @Autowired
-    public CommentService(CommentRepository commentRepository, PlatformUserRepository blogUserRepository) {
+    public CommentService(CommentRepository commentRepository, PlatformUserService userService) {
         this.commentRepository = commentRepository;
-        this.blogUserRepository = blogUserRepository;
+        this.userService = userService;
     }
 
-    // Add a new comment for a specific movie (all comments will be from Tanem)
-    public Comment addComment(Long movieId, String content, Double rating) {
-        // Fetch the Tanem user from the database
-        PlatformUser tanemUser = blogUserRepository.findByUserName("Tanem")
-                .orElseThrow(() -> new RuntimeException("User 'Tanem' not found"));
+    // Add a new comment for a specific movie
+    public Comment addComment(CommentInput commentInput, Long movieId, String userName) {
 
-        // Create and save the comment with Tanem as the author
-        Comment comment = new Comment(movieId, tanemUser, content, rating);
+        // Create and save the comment
+        Comment comment = new Comment(
+                commentInput.getRatingActors(),
+                commentInput.getRatingStory(),
+                commentInput.getRatingVisuals(),
+                commentInput.getComment(),
+                movieId,
+                userService.getCurrentUser(userName).get());
         return commentRepository.save(comment);
     }
 
