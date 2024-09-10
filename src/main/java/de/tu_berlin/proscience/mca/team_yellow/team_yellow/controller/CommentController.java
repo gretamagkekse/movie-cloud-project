@@ -28,6 +28,7 @@ public class CommentController {
     @SecurityRequirement(name = "BasicAuth")
     public Comment addComment(@PathVariable Long movieId, @RequestBody CommentInput commentInput, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
+        System.out.println("commentController"+ commentInput.getRatingActors());
         return commentService.addComment(commentInput, movieId, user.getUsername());
     }
 

@@ -37,6 +37,7 @@ public class Comment {
         this.movieId = movieId;
         this.user = user;
         this.createdAt = LocalDateTime.now();
+        System.out.println("Comment created"+ ratingVisuals+"/"+ratingActors+"/"+ratingStory);
     }
 
     public int getRatingActors() {

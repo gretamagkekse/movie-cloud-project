@@ -51,14 +51,16 @@
             <form id="comment-form">
 
                 <div class="mb-3">
-                    <textarea id="content" class="form-control" placeholder="Your Comment" required></textarea>
+                    <label for="content"></label><textarea id="content" class="form-control" placeholder="Your Comment" required></textarea>
                 </div>
                 <div class="mb-3">
-                    <input type="number" id="rating" class="form-control" placeholder="Your Rating of the actors (1-5)" min="1" max="5" step="1" required>
-                    <input type="number" id="ratingStory" class="form-control" placeholder="Your Rating of the story (1-5)" min="1" max="5" step="1" required>
-                    <input type="number" id="ratingVisuals" class="form-control" placeholder="Your Rating of the visuals (1-5)" min="1" max="5" step="1" required>
-
-
+                    <label for="ratingActors"></label><input type="number" id="ratingActors" class="form-control" placeholder="Your Rating of the actors (1-5)" min="1" max="5" step="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="ratingStory"></label><input type="number" id="ratingStory" class="form-control" placeholder="Your Rating of the story (1-5)" min="1" max="5" step="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="ratingVisuals"></label><input type="number" id="ratingVisuals" class="form-control" placeholder="Your Rating of the visuals (1-5)" min="1" max="5" step="1" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -134,9 +136,9 @@
         event.preventDefault();
 
         const commentData = {
-            ratingActors: document.getElementById("ratingActors").value,
-            ratingStory: document.getElementById("ratingStory").value,
-            ratingVisuals: document.getElementById("ratingVisuals").value,
+            ratingActors: parseInt(document.getElementById("ratingActors").value, 10),
+            ratingStory: parseInt(document.getElementById("ratingStory").value, 10),
+            ratingVisuals: parseInt(document.getElementById("ratingVisuals").value, 10),
             comment: document.getElementById("content").value
         };
 

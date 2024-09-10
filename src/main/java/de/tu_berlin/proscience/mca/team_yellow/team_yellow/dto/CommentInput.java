@@ -16,6 +16,7 @@ public class CommentInput {
         this.ratingStory = ratingStory;
         this.ratingVisuals = ratingVisuals;
         this.comment = comment;
+
     }
 
     public String getComment() {
