@@ -15,7 +15,7 @@ public class SecurityConfiguration {
 
     //TODO: need to be adjusted
     private static final String[] PATH_WITH_FREE_ACCESS = {
-            "/movies/**", "/", "index.html", "create.html", "login.html", "/js/**", "/webjars/**",
+            "/movies/**", "/*", "index.html", "create.html", "login.html", "/js/**", "/webjars/**",
             "/swagger-ui.html", "/swagger-ui/**", "/v3/**"};
 
     @Bean
@@ -23,7 +23,7 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(httpRequest ->
                         httpRequest
-                                .requestMatchers(HttpMethod.POST, "/comments").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/api/comments/*").authenticated()
                                 .requestMatchers("/me").authenticated()
                                 .requestMatchers(PATH_WITH_FREE_ACCESS).permitAll()
                                 .anyRequest().authenticated())

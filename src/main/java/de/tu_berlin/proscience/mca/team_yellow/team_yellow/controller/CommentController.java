@@ -3,7 +3,10 @@ package de.tu_berlin.proscience.mca.team_yellow.team_yellow.controller;
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.dto.CommentInput;
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.Comment;
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.service.CommentService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +25,11 @@ public class CommentController {
 
     // Add a new comment for a movie
     @PostMapping("/{movieId}")
-    public Comment addComment(@PathVariable Long movieId, @RequestBody CommentInput commentInput) {
-        // Only the content and rating will be passed; username is auto-set to 'Tanem'
-        return commentService.addComment(movieId, commentInput.getContent(), commentInput.getRating());
+    @SecurityRequirement(name = "BasicAuth")
+    public Comment addComment(@PathVariable Long movieId, @RequestBody CommentInput commentInput, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        System.out.println("commentController"+ commentInput.getRatingActors());
+        return commentService.addComment(commentInput, movieId, user.getUsername());
     }
 
     // Get all comments for a specific movie

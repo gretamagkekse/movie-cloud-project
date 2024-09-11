@@ -18,9 +18,6 @@ public class PlatformUser {
     @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
 
-    @OneToMany(mappedBy = "author")
-    @JsonBackReference
-    private List<Rating> ratings;
 
     @JsonIgnore
     private String passwordHash;
@@ -50,7 +47,5 @@ public class PlatformUser {
         return passwordHash;
     }
 
-    public List<Rating> getRatings() {
-        return ratings;
-    }
+
 }

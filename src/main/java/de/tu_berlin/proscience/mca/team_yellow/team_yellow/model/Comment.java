@@ -5,51 +5,72 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "comments")  // Change table name to avoid conflict with reserved keyword
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)  // Reference to the blog_user table
-    private PlatformUser user;  // Will be auto-set to 'Tanem'
+    private int ratingActors;
+    private int ratingStory;
+    private int ratingVisuals;
+
+    private String comment;
 
     private Long movieId; // Reference to the movie
 
-
-    private String content;  // Comment content
-    private Double rating;   // Rating from 1.0 to 10.0
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)  // Reference to the blog_user table
+    private PlatformUser user;
 
     private LocalDateTime createdAt;  // When the comment was created
-
 
     public Comment() {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Comment(Long movieId, PlatformUser user, String content, Double rating) {
+    public Comment(int ratingActors, int ratingStory, int ratingVisuals, String comment, Long movieId, PlatformUser user) {
+        this.ratingActors = ratingActors;
+        this.ratingStory = ratingStory;
+        this.ratingVisuals = ratingVisuals;
+        this.comment = comment;
         this.movieId = movieId;
         this.user = user;
-        this.content = content;
-        this.rating = rating;
         this.createdAt = LocalDateTime.now();
+        System.out.println("Comment created"+ ratingVisuals+"/"+ratingActors+"/"+ratingStory);
     }
 
-    public Long getId() {
-        return id;
+    public int getRatingActors() {
+        return ratingActors;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRatingActors(int ratingActors) {
+        this.ratingActors = ratingActors;
     }
 
-    public PlatformUser getUser() {
-        return user;
+    public int getRatingStory() {
+        return ratingStory;
     }
 
-    public void setUser(PlatformUser user) {
-        this.user = user;
+    public void setRatingStory(int ratingStory) {
+        this.ratingStory = ratingStory;
+    }
+
+    public int getRatingVisuals() {
+        return ratingVisuals;
+    }
+
+    public void setRatingVisuals(int ratingVisuals) {
+        this.ratingVisuals = ratingVisuals;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Long getMovieId() {
@@ -60,20 +81,12 @@ public class Comment {
         this.movieId = movieId;
     }
 
-    public String getContent() {
-        return content;
+    public PlatformUser getUser() {
+        return user;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Double getRating() {
-        return rating;
-    }
-
-    public void setRating(Double rating) {
-        this.rating = rating;
+    public void setUser(PlatformUser user) {
+        this.user = user;
     }
 
     public LocalDateTime getCreatedAt() {
