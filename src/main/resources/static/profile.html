@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container">
+        <ul class="navbar-nav">
+            <li id="indexLink" class="nav-item">
+                <a href="index.html" class="nav-link">All movies</a>
+            </li>
+            <li id="loginLink" class="nav-item">
+                <a href="login.html" class="nav-link">Login</a>
+            </li>
+            <li id="logoutLink" class="nav-item" hidden>
+                <a class="nav-link" onclick="logout()">Logout</a>
+            </li>
+            <li id="profileLink" class="nav-item" hidden>
+                <a href="profile.html" class="nav-link">Profile</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h2>Your Comments</h2>
+    <ul id="user-comments-list" class="list-group">
+        <!-- Comments will be dynamically loaded here -->
+    </ul>
+</div>
+
+<script src="js/nav.js" type="application/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function loadUserComments() {
+        const userCredentialString = sessionStorage.getItem("userCredential");
+        const userCredential = JSON.parse(userCredentialString);
+        const username = userCredential.username;
+        const auth = btoa(userCredential.username + ':' + userCredential.password);
+
+        fetch(`/api/comments/user-comments/${username}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Basic ' + auth
+            }
+        })
+            .then(response => response.json())
+            .then(comments => {
+            const commentsList = document.getElementById('user-comments-list');
+            commentsList.innerHTML = '';  // Clear previous comments
+            comments.forEach(comment => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item';
+                listItem.innerHTML = `
+                        <strong>Actors:</strong> (${comment.ratingActors}/5),
+                        <strong>Story:</strong> (${comment.ratingStory}/5),
+                        <strong>Visuals:</strong> (${comment.ratingVisuals}/5): ${comment.comment}
+                        <button class="btn btn-danger btn-sm float-end" onclick="deleteComment(${comment.commentId})">Delete</button>
+                    `;
+                commentsList.appendChild(listItem);
+            });
+        })
+            .catch(error => console.error('Error fetching user comments:', error));
+    }
+
+    function deleteComment(commentId) {
+        // Retrieve user credentials from session storage
+        const userCredentialString = sessionStorage.getItem("userCredential");
+
+        if (!userCredentialString) {
+            console.error('User is not logged in');
+            return;
+        }
+
+        const userCredential = JSON.parse(userCredentialString);
+        const auth = btoa(userCredential.username + ':' + userCredential.password);  // Base64 encode username and password for basic auth
+
+        // Send DELETE request to the server to delete the comment by commentId
+        fetch(`/api/comments/user-comments/${commentId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Basic ' + auth,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+            if (response.ok) {
+                console.log('Comment deleted successfully');
+                loadUserComments();  // Reload the user's comments after deletion
+            } else {
+                throw new Error('Failed to delete comment. Status: ' + response.status);
+            }
+        })
+            .catch(error => {
+            console.error('Error deleting comment:', error);
+        });
+    }
+
+    // Load comments when the page loads
+    loadUserComments();
+</script>
+</body>
+</html>
