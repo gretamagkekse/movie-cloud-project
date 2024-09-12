@@ -10,7 +10,7 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long commentId;
 
     private int ratingActors;
     private int ratingStory;
@@ -47,6 +47,14 @@ public class Comment {
 
     public void setRatingActors(int ratingActors) {
         this.ratingActors = ratingActors;
+    }
+
+    public Long getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
     }
 
     public int getRatingStory() {
