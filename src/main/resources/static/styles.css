@@ -1,0 +1,26 @@
+.star-rating {
+    direction: rtl;
+    display: inline-flex;
+    font-size: 1.5rem;
+    justify-content: flex-start;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    color: #ddd;
+    cursor: pointer;
+}
+
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #ffcc00;
+}
+
+/* Brown stars for displaying ratings in comments */
+.display-star {
+    color: #b5651d; /* Brown color for the stars */
+}
