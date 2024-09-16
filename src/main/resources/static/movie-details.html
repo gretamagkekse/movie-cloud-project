@@ -36,7 +36,12 @@
             <h3>Overview</h3>
             <p id="movie-overview"></p>
 
-            <h4>Vote Average: <span id="movie-vote"></span></h4>
+            <h4>IMDb Rating: <span id="movie-vote"></span></h4>
+            <h4 id="movie-average-rating">Average Rating: No ratings available</h4>
+            <!-- Optionally display averages for each category -->
+            <p id="average-actors"></p>
+            <p id="average-story"></p>
+            <p id="average-visuals"></p>
         </div>
     </div>
 
@@ -89,9 +94,9 @@
             return response.json();
         })
             .then(movie => {
-            console.log("Movie details:", movie);  // Log the movie details for debugging
+            console.log("Movie details:", movie);
 
-            // Update the HTML with movie details
+            // update the HTML
             document.getElementById("movie-title").innerText = movie.title;
             document.getElementById("movie-overview").innerText = movie.overview;
 
@@ -112,19 +117,51 @@
         });
     }
 
-    // Function to load comments for the movie
-    function loadComments() {
+    // load comments for the movie and calculate average rating
+    function loadCommentsAndCalculateAverage() {
         fetch(`/api/comments/${movieId}`)
             .then(response => response.json())
             .then(comments => {
             const commentsList = document.getElementById("comments-list");
             commentsList.innerHTML = ''; // Clear previous comments
+
+            let totalRatingActors = 0, totalRatingStory = 0, totalRatingVisuals = 0, commentCount = 0;
+
             comments.forEach(comment => {
+                // Add each comment to the list
                 const listItem = document.createElement("li");
                 listItem.className = "list-group-item";
-                listItem.innerHTML = `<strong>Actors:</strong> (${comment.ratingActors}/10), <strong>Story:</strong> (${comment.ratingStory}/10), <strong>Visuals:</strong> (${comment.ratingVisuals}/10) : ${comment.comment}`;
+                listItem.innerHTML = `<strong>Actors:</strong> (${comment.ratingActors}/5),
+                                      <strong>Story:</strong> (${comment.ratingStory}/5),
+                                      <strong>Visuals:</strong> (${comment.ratingVisuals}/5): ${comment.comment}`;
                 commentsList.appendChild(listItem);
+
+                // Sum up the ratings
+                totalRatingActors += comment.ratingActors;
+                totalRatingStory += comment.ratingStory;
+                totalRatingVisuals += comment.ratingVisuals;
+                commentCount++;
             });
+
+            // Calculate average ratings
+            if (commentCount > 0) {
+                const avgRatingActors = totalRatingActors / commentCount;
+                const avgRatingStory = totalRatingStory / commentCount;
+                const avgRatingVisuals = totalRatingVisuals / commentCount;
+
+                const avgTotalRating = (avgRatingActors + avgRatingStory + avgRatingVisuals) / 3;
+
+                //display the average ratings
+                document.getElementById("movie-average-rating").innerText = `Average Rating: ${avgTotalRating.toFixed(1)} / 5`;
+
+                //display individual category averages
+                document.getElementById("average-actors").innerText = `Actors: ${avgRatingActors.toFixed(1)} / 5`;
+                document.getElementById("average-story").innerText = `Story: ${avgRatingStory.toFixed(1)} / 5`;
+                document.getElementById("average-visuals").innerText = `Visuals: ${avgRatingVisuals.toFixed(1)} / 5`;
+            } else {
+                // If no comments, display no rating available
+                document.getElementById("movie-average-rating").innerText = "No ratings available";
+            }
         })
             .catch(error => console.error("Error fetching comments:", error));
     }
@@ -174,7 +211,7 @@
 
     // Load movie details and comments when the page loads
     loadMovieDetails();
-    loadComments();
+    loadCommentsAndCalculateAverage();
 </script>
 
 
