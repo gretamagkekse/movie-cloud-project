@@ -13,14 +13,28 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Set;
 
+
 @Service
 public class PlatformUserDetailService implements UserDetailsService {
+
     private final PlatformUserRepository platformUserRepository;
 
+
+    /**
+     * Service class that provides user authentication details for security purposes.
+     * Implements the UserDetailsService for getting user-specific data.
+     */
     public PlatformUserDetailService(PlatformUserRepository platformUserRepository) {
         this.platformUserRepository = platformUserRepository;
     }
 
+    /**
+     * Loads the user by their username for auth.
+     *
+     * @param username the username of the user.
+     * @return UserDetails containing the user's credentials and authorities.
+     * @throws UsernameNotFoundException if the user is not found in the repository.
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<PlatformUser> userOptional = platformUserRepository.findByUserName(username);

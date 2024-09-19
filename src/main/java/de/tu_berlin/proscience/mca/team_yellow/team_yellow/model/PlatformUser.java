@@ -1,16 +1,16 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
 
+/**
+ * Entity representing a platform user in the application.
+ */
 @Entity
 public class PlatformUser {
 
-    //https://github.com/freitagsrunde/modulist/blob/master/db/model-user.go
-    //ID, FirstName,LastName, Mail, MailVerified, PasswordHash, StatusGroup,privileges, Enabled
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +18,9 @@ public class PlatformUser {
     @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
 
-    // Liste der Movie-IDs (TMDb IDs)
+    /**
+     * List of the user's favorite movie's IDs (TMDb IDs).
+     */
     @ElementCollection
     @CollectionTable(name = "user_favorite_movies", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "movie_id")
@@ -30,6 +32,12 @@ public class PlatformUser {
 
     public PlatformUser() {
     }
+
+    /**
+     * Constructor with username.
+     *
+     * @param userName the username of the user.
+     */
     public PlatformUser(String userName) {
         this.userName = userName;
     }
@@ -38,6 +46,8 @@ public class PlatformUser {
     public Long getId() {
         return id;
     }
+
+
     public void setId(Long id) {
         this.id = id;
     }

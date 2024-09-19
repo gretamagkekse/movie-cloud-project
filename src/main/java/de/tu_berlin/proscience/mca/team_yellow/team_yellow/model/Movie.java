@@ -3,7 +3,9 @@ package de.tu_berlin.proscience.mca.team_yellow.team_yellow.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 
-
+/**
+ * Class representing a movie.
+ */
 public class Movie {
 
     private Long id;

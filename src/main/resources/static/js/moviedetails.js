@@ -1,35 +1,37 @@
 const params = new URLSearchParams(window.location.search);
 const movieId = params.get("id");
 
+//Load details from the selected movie (title, overview, IMDb vote, poster)
 document.addEventListener('DOMContentLoaded', function() {
     function loadMovieDetails() {
         const movieId = getMovieIdFromUrl();
 
         fetch(`/api/movie/${movieId}`)
             .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error fetching movie details: ${response.status}`);
-                }
-                return response.json();
-            })
+            if (!response.ok) {
+                throw new Error(`Error fetching movie details: ${response.status}`);
+            }
+            return response.json();
+        })
             .then(movie => {
-                document.getElementById("movie-title").innerText = movie.title;
-                document.getElementById("movie-overview").innerText = movie.overview;
+            document.getElementById("movie-title").innerText = movie.title;
+            document.getElementById("movie-overview").innerText = movie.overview;
 
-                if (movie.vote_average !== undefined && movie.vote_average !== null) {
-                    document.getElementById("movie-vote").innerText = movie.vote_average.toFixed(1);
-                } else {
-                    document.getElementById("movie-vote").innerText = "No vote average available";
-                }
+            if (movie.vote_average !== undefined && movie.vote_average !== null) {
+                document.getElementById("movie-vote").innerText = movie.vote_average.toFixed(1);
+            } else {
+                document.getElementById("movie-vote").innerText = "No vote average available";
+            }
 
-                document.getElementById("movie-poster").src = movie.fullPosterPath;
-            })
+            document.getElementById("movie-poster").src = movie.fullPosterPath;
+        })
             .catch(error => {
-                console.error("Error fetching movie details:", error);
-                alert("Failed to load movie details.");
-            });
+            console.error("Error fetching movie details:", error);
+            alert("Failed to load movie details.");
+        });
     }
 
+    // Check if the current movie is in the user's favourite movies
     function checkIfMovieIsFavorite() {
         const movieId = getMovieIdFromUrl();
         const userId = getUserIdFromSession();
@@ -42,11 +44,12 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`/api/favorites/is-favorite?userId=${userId}&movieId=${movieId}`)
             .then(response => response.json())
             .then(isFavorite => {
-                updateFavoriteButton(isFavorite);
-            })
+            updateFavoriteButton(isFavorite);
+        })
             .catch(error => console.error('Error checking if movie is favorite:', error));
     }
 
+    // Update favourite button according to the movie's status (favorited or not)
     function updateFavoriteButton(isFavorite) {
         const favoriteBtn = document.getElementById('favorite-btn');
         if (isFavorite) {
@@ -62,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Add movie to favorites and update button
     function addToFavorites(userId, movieId) {
         $.ajax({
             url: '/api/favorites/add',
@@ -81,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Remove movie from favorites and update button
     function removeFromFavorites(userId, movieId) {
         $.ajax({
             url: '/api/favorites/remove',
@@ -141,14 +146,14 @@ function loadCommentsAndCalculateAverage() {
     fetch(`/api/comments/${movieId}`)
         .then(response => response.json())
         .then(comments => {
-            const commentsList = document.getElementById("comments-list");
-            commentsList.innerHTML = ''; // Clear previous comments
+        const commentsList = document.getElementById("comments-list");
+        commentsList.innerHTML = ''; // Clear previous comments
 
-            let totalRatingActors = 0, totalRatingStory = 0, totalRatingVisuals = 0, commentCount = 0;
+        let totalRatingActors = 0, totalRatingStory = 0, totalRatingVisuals = 0, commentCount = 0;
 
-            if(comments.length === 0){
-                commentsList.innerHTML = '<p class="text-center">There are no comments/ratings yet.</p>';
-            }else{
+        if(comments.length === 0){
+            commentsList.innerHTML = '<p class="text-center">There are no comments/ratings yet.</p>';
+        }else{
             comments.forEach(comment => {
                 commentCount++;
 
@@ -176,23 +181,23 @@ function loadCommentsAndCalculateAverage() {
                 commentsList.appendChild(listItem);
             })};
 
-            // Calculate averages if there are comments
-            if (commentCount > 0) {
-                const avgRatingActors = (totalRatingActors / commentCount).toFixed(1);
-                const avgRatingStory = (totalRatingStory / commentCount).toFixed(1);
-                const avgRatingVisuals = (totalRatingVisuals / commentCount).toFixed(1);
-                const overallAverage = ((totalRatingActors + totalRatingStory + totalRatingVisuals) / (commentCount * 3)).toFixed(1);
+        // Calculate averages if there are comments
+        if (commentCount > 0) {
+            const avgRatingActors = (totalRatingActors / commentCount).toFixed(1);
+            const avgRatingStory = (totalRatingStory / commentCount).toFixed(1);
+            const avgRatingVisuals = (totalRatingVisuals / commentCount).toFixed(1);
+            const overallAverage = ((totalRatingActors + totalRatingStory + totalRatingVisuals) / (commentCount * 3)).toFixed(1);
 
-                // Update the averages in the HTML
-                document.getElementById("average-actors").innerText = `Actors: ${avgRatingActors} / 5`;
-                document.getElementById("average-story").innerText = `Story: ${avgRatingStory} / 5`;
-                document.getElementById("average-visuals").innerText = `Visuals: ${avgRatingVisuals} / 5`;
-                document.getElementById("movie-average-rating").innerText = `Average Rating: ${overallAverage} / 5`;
-            } else {
-                // No comments, so no ratings available
-                document.getElementById("movie-average-rating").innerText = "No ratings available";
-            }
-        })
+            // Update the averages in the HTML
+            document.getElementById("average-actors").innerText = `Actors: ${avgRatingActors} / 5`;
+            document.getElementById("average-story").innerText = `Story: ${avgRatingStory} / 5`;
+            document.getElementById("average-visuals").innerText = `Visuals: ${avgRatingVisuals} / 5`;
+            document.getElementById("movie-average-rating").innerText = `Average Rating: ${overallAverage} / 5`;
+        } else {
+            // No comments, so no ratings available
+            document.getElementById("movie-average-rating").innerText = "No ratings available";
+        }
+    })
         .catch(error => console.error("Error fetching comments:", error));
 }
 
@@ -250,18 +255,18 @@ document.getElementById("comment-form").addEventListener("submit", function(even
         body: JSON.stringify(commentData)
     })
         .then(response => {
-            if (response.status === 401) {
-                alert("Unauthorized: Please log in.");
-                window.location.href = 'login.html';
-            } else if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-            return response.json();
-        })
+        if (response.status === 401) {
+            alert("Unauthorized: Please log in.");
+            window.location.href = 'login.html';
+        } else if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return response.json();
+    })
         .then(() => {
-            loadCommentsAndCalculateAverage();  // Reload the comments
-            document.getElementById("comment-form").reset();  // Clear form
-        })
+        loadCommentsAndCalculateAverage();  // Reload the comments
+        document.getElementById("comment-form").reset();  // Clear form
+    })
         .catch(error => console.error("Error submitting comment:", error));
 });
 

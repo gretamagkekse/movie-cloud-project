@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entity representing a comment AND rating made by a user.
+ */
 @Entity
 @Table(name = "comments")  // Change table name to avoid conflict with reserved keyword
 public class Comment {
