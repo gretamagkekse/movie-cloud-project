@@ -1,5 +1,9 @@
 package de.tu_berlin.proscience.mca.team_yellow.team_yellow.dto;
 
+/**
+ * DTO representing the input for a comment.
+ * It includes ratings for actors, story, and visuals, and the comment text.
+ */
 public class CommentInput {
     private int ratingActors;
     private int ratingStory;

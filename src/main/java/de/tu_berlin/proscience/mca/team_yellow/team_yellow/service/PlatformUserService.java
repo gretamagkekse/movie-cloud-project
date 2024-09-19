@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Service class responsible for handling operations related to platform users.
+ */
 @Service
 public class PlatformUserService {
     private PlatformUserRepository platformUserRepository;
@@ -14,6 +17,12 @@ public class PlatformUserService {
         this.platformUserRepository = platformUserRepository;
     }
 
+    /**
+     * Retrieves the current user by their username.
+     *
+     * @param username the username of the user.
+     * @return an Optional containing the PlatformUser if found, or empty if not.
+     */
     public Optional<PlatformUser> getCurrentUser(String username) {
         return platformUserRepository.findByUserName(username);
     }

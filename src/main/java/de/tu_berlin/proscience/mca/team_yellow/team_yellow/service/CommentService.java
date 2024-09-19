@@ -5,6 +5,7 @@ import de.tu_berlin.proscience.mca.team_yellow.team_yellow.model.Comment;
 import de.tu_berlin.proscience.mca.team_yellow.team_yellow.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,13 +16,24 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private PlatformUserService userService;
 
+    /**
+     * Service class responsible for managing comments on movies.
+     * It interacts with the CommentRepository and PlatformUserService.
+     */
     @Autowired
     public CommentService(CommentRepository commentRepository, PlatformUserService userService) {
         this.commentRepository = commentRepository;
         this.userService = userService;
     }
 
-    // Add a new comment for a specific movie
+    /**
+     * Adds a new comment for a specific movie.
+     *
+     * @param commentInput the input data for the comment.
+     * @param movieId      the ID of the movie being commented on.
+     * @param userName     the username of the user adding the comment.
+     * @return the saved Comment.
+     */
     public Comment addComment(CommentInput commentInput, Long movieId, String userName) {
 
         // Create and save the comment
@@ -35,16 +47,34 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    // Retrieve all comments for a specific movie
+
+    /**
+     * Retrieves all comments for a specific movie.
+     *
+     * @param movieId the ID of the movie.
+     * @return a list of comments for the movie.
+     */
     public List<Comment> getCommentsByMovieId(Long movieId) {
         return commentRepository.findByMovieId(movieId);
     }
 
-    // retrieve all comments for a specific user
+    /**
+     * Retrieves all comments made by a specific user.
+     *
+     * @param userName the username of the user.
+     * @return a list of comments made by the user.
+     */
     public List<Comment> getCommentsByUserName(String userName) {
         return commentRepository.findByUserName(userName);
     }
 
+    /**
+     * Deletes a comment if it belongs to the logged-in user.
+     *
+     * @param commentId the ID of the comment to delete.
+     * @param username  the username of the user attempting to delete the comment.
+     * @return true if the comment was successfully deleted, false otherwise.
+     */
     public boolean deleteComment(Long commentId, String username) {
         Optional<Comment> commentOptional = commentRepository.findById(commentId);
 

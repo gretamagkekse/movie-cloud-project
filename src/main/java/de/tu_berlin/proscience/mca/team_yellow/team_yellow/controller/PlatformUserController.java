@@ -11,6 +11,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
+/**
+ * Controller class for managing user-related endpoints.
+ */
 @RestController
 public class PlatformUserController {
 
@@ -20,6 +23,13 @@ public class PlatformUserController {
         this.userService = userService;
     }
 
+    /**
+     * Retrieves currently authenticated user.
+     *
+     * @param authentication the authentication object containing the (logged-in) user's details.
+     * @return the PlatformUser object representing the current user.
+     * @throws ResponseStatusException if the user is not found (returns UNAUTHORIZED status).
+     */
     @GetMapping(path = "/me")
     @SecurityRequirement(name = "BasicAuth")
     public PlatformUser getCurrentUser(Authentication authentication) {
