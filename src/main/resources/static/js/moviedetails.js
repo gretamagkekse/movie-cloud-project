@@ -146,6 +146,9 @@ function loadCommentsAndCalculateAverage() {
 
             let totalRatingActors = 0, totalRatingStory = 0, totalRatingVisuals = 0, commentCount = 0;
 
+            if(comments.length === 0){
+                commentsList.innerHTML = '<p class="text-center">There are no comments/ratings yet.</p>';
+            }else{
             comments.forEach(comment => {
                 commentCount++;
 
@@ -171,7 +174,7 @@ function loadCommentsAndCalculateAverage() {
                 `;
 
                 commentsList.appendChild(listItem);
-            });
+            })};
 
             // Calculate averages if there are comments
             if (commentCount > 0) {

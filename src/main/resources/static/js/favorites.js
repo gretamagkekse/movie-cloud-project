@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const favoritesList = document.getElementById('favorites-list');
 
             if (favorites.length === 0) {
-                favoritesList.innerHTML = '<p class="text-center">You have no favorite movies.</p>';
+                favoritesList.innerHTML = '<p class="text-center">You have no favorite movies yet.</p>';
             } else {
                 favorites.forEach(movie => {
                     console.log(movie.id)
