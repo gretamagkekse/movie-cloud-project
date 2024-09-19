@@ -18,6 +18,12 @@ public class PlatformUser {
     @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
 
+    // Liste der Movie-IDs (TMDb IDs)
+    @ElementCollection
+    @CollectionTable(name = "user_favorite_movies", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "movie_id")
+    private List<Long> favoriteMovieIds;
+
 
     @JsonIgnore
     private String passwordHash;
@@ -45,6 +51,14 @@ public class PlatformUser {
 
     public String getPasswordHash() {
         return passwordHash;
+    }
+
+    public List<Long> getFavoriteMovieIds() {
+        return favoriteMovieIds;
+    }
+
+    public void setFavoriteMovieIds(List<Long> favoriteMovieIds) {
+        this.favoriteMovieIds = favoriteMovieIds;
     }
 
 

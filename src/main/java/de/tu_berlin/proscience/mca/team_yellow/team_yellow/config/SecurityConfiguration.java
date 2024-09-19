@@ -15,8 +15,9 @@ public class SecurityConfiguration {
 
     //TODO: need to be adjusted
     private static final String[] PATH_WITH_FREE_ACCESS = {
-            "/movies/**", "/*", "index.html", "create.html", "login.html", "/js/**", "/webjars/**",
-            "/swagger-ui.html", "/swagger-ui/**", "/v3/**"};
+            "/movies/**", "/**", "index.html", "create.html", "login.html", "/js/**", "/webjars/**",
+            "/swagger-ui.html", "/swagger-ui/**", "/v3/**", "/api/movies/popular" ,"/static/favicon.ico","/api/favorites"
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -25,7 +26,9 @@ public class SecurityConfiguration {
                         httpRequest
                                 .requestMatchers(HttpMethod.POST, "/api/comments/*").authenticated()
                                 .requestMatchers("/me").authenticated()
+                                .requestMatchers("/api/favorites").authenticated()
                                 .requestMatchers(PATH_WITH_FREE_ACCESS).permitAll()
+                                .requestMatchers("/api/favorites/**").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

@@ -13,23 +13,28 @@
     <div class="container">
         <ul class="navbar-nav">
             <li id="indexLink" class="nav-item">
-                <a href="index.html" class="nav-link">All movies</a>
+                <a href="index.html" class="nav-link ">All movies</a>
             </li>
             <li id="loginLink" class="nav-item">
                 <a href="login.html" class="nav-link">Login</a>
             </li>
-            <li id="logoutLink" class="nav-item" hidden>
-                <a class="nav-link" onclick="logout()">Logout</a>
+            <li id="favoritesLink" class="nav-item" hidden>
+                <a href="favorites.html" class="nav-link">Favorites</a>
             </li>
             <li id="profileLink" class="nav-item" hidden>
                 <a href="profile.html" class="nav-link">Profile</a>
+            </li>
+            <li id="logoutLink" class="nav-item" hidden>
+                <a class="nav-link" onclick="logout()">Logout</a>
             </li>
         </ul>
     </div>
 </nav>
 <div class="container">
     <h1 id="movie-title" class="text-center my-4">Movie Title</h1>
-
+    <div class="mt-4">
+        <button id="favorite-btn" class="btn btn-primary">Add to Favorites</button>
+    </div>
     <div class="row">
         <div class="col-md-4">
             <img id="movie-poster" src="" alt="Movie Poster" class="img-fluid">
