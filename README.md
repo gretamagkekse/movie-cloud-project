@@ -8,36 +8,122 @@ to start the database, you have to run the docker container.
 - then, use the command ```docker compose up --detach``` to create and run a docker container
 - to stop the container use ```docker compose down --volumes```
 
-## Pull changes from main to your dev branch
 
-```
-git checkout [local_branch_name] //wenn man noch nicht auf dem richtigen lokalen Branch ist
-git fetch origin       
-git merge origin/main
-```
+## Table of Contents
 
-## Create new feature branch
+- [Endpoints](#endpoints)
+    - [Movie Endpoints](#movie-endpoints)
+    - [Favorites Endpoints](#favorites-endpoints)
+    - [Comment Endpoints](#comment-endpoints)
+- [Authentication](#authentication)
+- [Technologies](#technologies)
 
-```
-git checkout -b [name_of_feature_branch] //erstellt neuen lokalen Branch
-git push --set-upstream origin [name_of_feature_branch] //erstellt Verbindung zu remote Branch
+## Endpoints
 
-```
+### Movie Endpoints
 
-## Add your local changes to remote branch
+#### Get Movie Details
 
-```
-git checkout [local_branch_name] //wenn man noch nicht auf dem richtigen lokalen Branch ist
-git add .
-git commit -m '[message]'
-git push
-```
+- **GET** `/api/movie/{id}`
+- Retrieves detailed information about a specific movie.
 
-## Merge remote branch into main
+  
+#### Get Popular Movies
 
-1. On the left sidebar, select Search or go to and find your project.
-2. Select Code > Merge requests.
-3. In the upper-right corner, select New merge request.
-4. Select a source and target branch, then select Compare branches and continue.
-5. Complete the fields on the New merge request page, then select Create merge request
+- **GET** `/api/movies/popular`
+- Retrieves a list of popular movies.
 
+
+#### Search Movies
+
+- **GET** `/api/movies/search`
+- Searches for movies based on a query string.
+
+
+
+---
+
+### Favorites Endpoints
+
+#### Add Movie to Favorites
+
+- **POST** `/api/favorites/add`
+- Adds a movie to the user's list of favorite movies.
+
+
+
+#### Remove Movie from Favorites
+
+- **POST** `/api/favorites/remove`
+- Removes a movie from the user's list of favorite movies.
+
+
+
+#### Get User's Favorite Movies
+
+- **GET** `/api/favorites/list`
+- Retrieves a list of the user's favorite movies.
+
+
+
+#### Check if Movie is in Favorites
+
+- **GET** `/api/favorites/is-favorite`
+- Checks if a specific movie is in the user's favorites list.
+
+
+---
+
+### Comment Endpoints
+
+#### Add a Comment
+
+- **POST** `/api/comments/{movieId}`
+- Adds a comment to a specific movie.
+
+
+
+#### Get All Comments for a Movie
+
+- **GET** `/api/comments/{movieId}`
+- Retrieves all comments for a specific movie.
+
+
+#### Get All Comments by a User
+
+- **GET** `/api/comments/user-comments/{username}`
+- Retrieves all comments made by a specific user.
+
+
+
+#### Delete a Comment
+
+- **DELETE** `/api/comments/user-comments/{id}`
+- Deletes a comment made by the current user.
+
+
+
+---
+
+## Authentication
+
+The API uses **Basic Authentication** for endpoints that require the user to be logged in. When a user is authenticated, they can add, remove, and retrieve their favorite movies, as well as post comments.
+
+### Secured Endpoints
+The following endpoints require authentication:
+
+- `POST /api/favorites/add`
+- `POST /api/favorites/remove`
+- `GET /api/favorites/list`
+- `GET /api/favorites/is-favorite`
+- `POST /api/comments/{movieId}`
+- `DELETE /api/comments/user-comments/{id}`
+
+---
+
+## Technologies
+
+- **[Spring Boot](https://spring.io/projects/spring-boot)**: Backend framework used to build the REST API.
+- **[TMDb API](https://developer.themoviedb.org/docs/getting-started)**: Used to retrieve movie details and popular movies.
+- **[Swagger (OpenAPI)](https://swagger.io/)**: Used for API documentation and security requirements.
+- **JPA**: Used for database interactions, such as managing users and comments.
