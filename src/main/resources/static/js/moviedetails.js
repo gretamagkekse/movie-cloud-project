@@ -35,13 +35,21 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkIfMovieIsFavorite() {
         const movieId = getMovieIdFromUrl();
         const userId = getUserIdFromSession();
+        const userCredentialString = sessionStorage.getItem("userCredential");
+        const userCredential = JSON.parse(userCredentialString);
+        const auth = btoa(userCredential.username + ':' + userCredential.password);
 
         if (!userId) {
             console.log('No user logged in, skipping favorite check.');
             return;
         }
 
-        fetch(`/api/favorites/is-favorite?userId=${userId}&movieId=${movieId}`)
+        fetch(`/api/favorites/is-favorite?userId=${userId}&movieId=${movieId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Basic ' + auth,
+                'Content-Type': 'application/json'
+            }})
             .then(response => response.json())
             .then(isFavorite => {
             updateFavoriteButton(isFavorite);
@@ -67,9 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add movie to favorites and update button
     function addToFavorites(userId, movieId) {
+        const userCredentialString = sessionStorage.getItem("userCredential");
+        const userCredential = JSON.parse(userCredentialString);
+        const auth = btoa(userCredential.username + ':' + userCredential.password);
         $.ajax({
             url: '/api/favorites/add',
             method: 'POST',
+            headers: {'Authorization': 'Basic ' + auth},
             data: {
                 userId: userId,
                 movieId: movieId
@@ -87,9 +99,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Remove movie from favorites and update button
     function removeFromFavorites(userId, movieId) {
+        const userCredentialString = sessionStorage.getItem("userCredential");
+        const userCredential = JSON.parse(userCredentialString);
+        const auth = btoa(userCredential.username + ':' + userCredential.password);
         $.ajax({
             url: '/api/favorites/remove',
             method: 'POST',
+            headers: {'Authorization': 'Basic ' + auth},
             data: {
                 userId: userId,
                 movieId: movieId
@@ -143,6 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadCommentsAndCalculateAverage() {
+
     fetch(`/api/comments/${movieId}`)
         .then(response => response.json())
         .then(comments => {
@@ -175,7 +192,7 @@ function loadCommentsAndCalculateAverage() {
                     <strong>Actors:</strong> ${actorsStars}<br>
                     <strong>Story:</strong> ${storyStars}<br>
                     <strong>Visuals:</strong> ${visualsStars}<br>
-                    <p>${comment.comment}</p>
+                    <p>${comment.user.userName}: ${comment.comment}</p>
                 `;
 
                 commentsList.appendChild(listItem);
