@@ -1,13 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const userId = getUserIdFromSession();
+    const userCredential= getUserCredentialFromSession();
+    const auth = btoa(userCredential.username + ':' + userCredential.password);
 
-    if (!userId) {
+    if (!userCredential) {
         alert('Please login to view your favorites.');
         window.location.href = 'login.html';
         return;
     }
 
-    fetch(`/api/favorites/list?userId=${userId}`)
+    fetch(`/api/favorites/list?userId=${userCredential.username}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Basic ' + auth,
+            'Content-Type': 'application/json'
+        }}
+    )
         .then(response => response.json())
         .then(favorites => {
             const favoritesList = document.getElementById('favorites-list');
@@ -52,8 +59,7 @@ function createMovieCard(movie) {
 }
 
 
-function getUserIdFromSession() {
+function getUserCredentialFromSession() {
     const userCredentialString = sessionStorage.getItem("userCredential");
-    const userCredential = JSON.parse(userCredentialString);
-    return userCredential.username;
+    return JSON.parse(userCredentialString);
 }

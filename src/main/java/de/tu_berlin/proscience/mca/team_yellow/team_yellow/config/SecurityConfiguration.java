@@ -15,8 +15,11 @@ public class SecurityConfiguration {
 
     //TODO: need to be adjusted
     private static final String[] PATH_WITH_FREE_ACCESS = {
-            "/movies/**", "/**", "index.html", "create.html", "login.html", "/js/**", "/webjars/**",
-            "/swagger-ui.html", "/swagger-ui/**", "/v3/**", "/api/movies/popular" ,"/static/favicon.ico","/api/favorites"
+            "/api/movies/popular", "/api/movie/**", "/api/movies/search",
+            "/api/comments/**", "/api/tmdb/apikey",
+            "/","index.html", "movie-details.html**","profile.html", "login.html", "favorites.html",
+            "/js/**", "/webjars/**","/styles.css",
+            "/swagger-ui.html", "/swagger-ui/**", "/v3/**", "/favicon.ico"
     };
 
     @Bean
@@ -24,11 +27,11 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(httpRequest ->
                         httpRequest
-                                .requestMatchers(HttpMethod.POST, "/api/comments/*").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/api/comments/**").authenticated()
                                 .requestMatchers("/me").authenticated()
-                                .requestMatchers("/api/favorites").authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/api/comments/**").authenticated()
+                                .requestMatchers("/api/favorites/**").authenticated()
                                 .requestMatchers(PATH_WITH_FREE_ACCESS).permitAll()
-                                .requestMatchers("/api/favorites/**").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
