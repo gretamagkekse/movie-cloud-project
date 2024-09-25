@@ -29,48 +29,44 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: rgba(240, 128, 128, 0.6);">
 <header>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <div class="container d-flex justify-content-between">
-            <!-- Linke Seite: Logo und Links -->
-            <div class="d-flex">
-                <a class="navbar-brand" href="index.html">
-                    <img src="logo.png" alt="Logo" style="width: 40px; height: 40px;">
-                </a>
-                <ul class="navbar-nav">
-                    <li id="indexLink" class="nav-item">
-                        <a href="index.html" class="nav-link">All movies</a>
-                    </li>
-                    <li id="favoritesLink" class="nav-item" hidden>
-                        <a href="favorites.html" class="nav-link">Favorites</a>
-                    </li>
-                    <li id="profileLink" class="nav-item" hidden>
-                        <a href="profile.html" class="nav-link">Profile</a>
-                    </li>
-                </ul>
-            </div>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="position: relative;">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="logo.png" alt="Logo" style="width: 40px; height: 40px;">
+        </a>
+        <ul class="navbar-nav">
+            <li id="indexLink" class="nav-item">
+                <a href="index.html" class="nav-link">All movies</a>
+            </li>
+            <li id="favoritesLink" class="nav-item" hidden>
+                <a href="favorites.html" class="nav-link">Favorites</a>
+            </li>
+            <li id="profileLink" class="nav-item" hidden>
+                <a href="profile.html" class="nav-link">Profile</a>
+            </li>
+        </ul>
 
-            <!-- Mittiges Bild -->
-            <div class="d-flex justify-content-center flex-grow-1">
-                <img src="bild_name.png" alt="Center Image" style="height: 50px;">
-            </div>
-
-            <!-- Rechte Seite: Login und Logout -->
-            <ul class="navbar-nav">
-                <li id="loginLink" class="nav-item">
-                    <a href="login.html" class="nav-link">Login</a>
-                </li>
-                <li id="logoutLink" class="nav-item" hidden>
-                    <a class="nav-link" onclick="logout()">Logout</a>
-                </li>
-            </ul>
+        <!-- Center the image in the nav -->
+        <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+            <img src="bild_name.png" alt="Center Image" style="height: 50px;">
         </div>
-    </nav>
+
+        <ul class="navbar-nav ms-auto">
+            <li id="loginLink" class="nav-item">
+                <a href="login.html" class="nav-link">Login</a>
+            </li>
+            <li id="logoutLink" class="nav-item" hidden>
+                <a class="nav-link" onclick="logout()">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 </header>
 <main>
     <div class="container mt-5 login-container">
-        <h1 class="mb-4">Login</h1> <!-- Überschrift hinzufügen -->
+        <h1 class="mb-4">Login</h1>
         <div class="row justify-content-center">
             <div class="col-sm-6">
                 <div class="mb-3">
@@ -87,8 +83,10 @@
                 </div>
             </div>
         </div>
-        <div class="text-center">
-            <input class="btn btn-primary" onclick="login()" type="button" value="Login" style="background-color: red; border-color: red; color: white; width: 20%;" />
+        <div class="row justify-content-center">
+            <div class="col-sm-6">
+                <input class="btn btn-primary form-control" onclick="login()" type="button" value="Login" style="background-color: red; border-color: red; color: white;" />
+            </div>
         </div>
     </div>
 </main>

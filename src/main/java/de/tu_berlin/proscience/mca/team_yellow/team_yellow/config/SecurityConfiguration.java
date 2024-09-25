@@ -19,7 +19,8 @@ public class SecurityConfiguration {
             "/api/comments/**", "/api/tmdb/apikey",
             "/","index.html", "movie-details.html**","profile.html", "login.html", "favorites.html",
             "/js/**", "/webjars/**","/styles.css",
-            "/swagger-ui.html", "/swagger-ui/**", "/v3/**", "/favicon.ico"
+            "/swagger-ui.html", "/swagger-ui/**", "/v3/**",
+            "/favicon.ico", "/logo.png", "/bild_name.png","/Hintergrund.jpeg"
     };
 
     @Bean
